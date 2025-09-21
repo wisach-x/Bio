@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bio</title>
+  <!-- Added preload for critical fonts to improve loading speed -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" as="style">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Professional red-black color scheme with better contrast ratios */
+      --primary: #dc2626;
+      --primary-dark: #991b1b;
+      --primary-light: #ef4444;
+      --secondary: #b91c1c;
+      --accent: #f87171;
+      --background: #0a0a0a;
+      --surface: #1a1a1a;
+      --surface-light: #262626;
+      --text-primary: #ffffff;
+      --text-secondary: #d1d5db;
+      --text-muted: #9ca3af;
+      --border: rgba(220, 38, 38, 0.2);
+      --glow-primary: rgba(220, 38, 38, 0.4);
+      --glow-secondary: rgba(185, 28, 28, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+      /* Improved font rendering for better readability */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Simplified background animation for better performance */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(185, 28, 28, 0.06) 0%, transparent 50%);
+      z-index: -2;
+      will-change: transform;
+    }
+
+    /* Reduced particle count for better mobile performance */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: float 15s infinite linear;
+      will-change: transform;
+    }
+
+    .particle:nth-child(2n) {
+      background: var(--secondary);
+      animation-duration: 18s;
+      width: 1px;
+      height: 1px;
+    }
+
+    .main-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      position: relative;
+    }
+
+    .profile-card {
+      max-width: 800px;
+      width: 100%;
+      background: rgba(26, 26, 26, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+      /* Professional shadow with subtle red accent */
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(220, 38, 38, 0.1);
+      animation: cardEntrance 0.8s ease-out;
+    }
+
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    /* More professional avatar styling */
+    .avatar-container {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .avatar {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--primary);
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(220, 38, 38, 0.3);
+    }
+
+    .avatar:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 40px rgba(220, 38, 38, 0.4);
+    }
+
+    /* Professional typography with better hierarchy */
+    .profile-title {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+      /* Subtle red accent instead of gradient for professionalism */
+      text-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+    }
+
+    .profile-subtitle {
+      font-size: 1.25rem;
+      color: var(--primary);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .profile-description {
+      max-width: 600px;
+      margin: 0 auto 0rem;
+    }
+
+    .profile-description p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    /* Improved responsive grid layout */
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* More professional button styling with better accessibility */
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      /* Better focus states for accessibility */
+      outline: none;
+    }
+
+    .social-link:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+    }
+
+    .social-link:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+      background: rgba(220, 38, 38, 0.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Platform-specific hover colors for better UX */
+    .social-link.youtube:hover {
+      border-color: #ff0000;
+      background: rgba(255, 0, 0, 0.05);
+    }
+
+    .social-link.website:hover {
+      border-color: var(--primary-light);
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .social-link.tiktok:hover {
+      border-color: #ff0050;
+      background: rgba(255, 0, 80, 0.05);
+    }
+
+    .social-link.discord:hover {
+      border-color: #5865f2;
+      background: rgba(88, 101, 242, 0.05);
+    }
+
+    /* Professional donate button with clear CTA */
+    .donate-link {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: 1px solid var(--primary-light) !important;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: white !important;
+    }
+
+    .donate-link:hover {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(220, 38, 38, 0.4);
+    }
+
+    .social-icon {
+      font-size: 1.25rem;
+      transition: transform 0.3s ease;
+    }
+
+    .social-link:hover .social-icon {
+      transform: scale(1.1);
+    }
+
+    /* Enhanced mobile responsiveness */
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 1rem 0.5rem;
+      }
+
+      .profile-card {
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+        margin: 1rem 0.5rem;
+      }
+
+      .social-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .profile-title {
+        font-size: 2.25rem;
+      }
+
+      .profile-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .profile-description p {
+        font-size: 1rem;
+      }
+
+      .avatar {
+        width: 120px;
+        height: 120px;
+      }
+
+      .social-link {
+        padding: 0.875rem 1.25rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profile-card {
+        padding: 1.5rem 1rem;
+      }
+
+      .profile-title {
+        font-size: 2rem;
+      }
+
+      .avatar {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    /* Optimized animations for better performance */
+    @keyframes cardEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0px);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100px) translateX(100px);
+        opacity: 0;
+      }
+    }
+
+    /* Simplified loading screen for faster perceived performance */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--background);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeOut 0.5s ease-out 1s forwards;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    /* Reduced motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <div class="particles" id="particles"></div>
+
+  <div class="main-container">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="avatar-container">
+          <img src="/wiconlogo.png?height=160&width=160" alt="WiSACH X - Professional Gaming Streamer" class="avatar">
+        </div>
+        
+        <h1 class="profile-title">WiSACH X</h1>
+        <p class="profile-subtitle">Professional Gaming & PC Optimization</p>
+        
+        <div class="profile-description">
+        <p>ปรับแต่งคอมพิวเตอร์เพื่อประสิทธิภาพสูงสุด จูนคอมให้เล่นเกมลื่นไหล สตรีมมิ่งเกมและคำปรึกษาฟรี รับประกันผลลัพธ์</p>
+        </div>
+      </div>
+
+      <div class="social-grid">
+        <!-- Moved donation button to first position for mobile priority -->
+        <a href="https://ezdn.app/wisachx" target="_blank" rel="noopener noreferrer" class="social-link donate-link" aria-label="Support & Donate">
+          <i class="fas fa-heart social-icon" aria-hidden="true"></i>
+          <span>โดเนทขึ้นจอ</span>
+        </a>
+        
+        <a href="https://www.youtube.com/@wisach_x" target="_blank" rel="noopener noreferrer" class="social-link youtube" aria-label="YouTube Channel">
+          <i class="fab fa-youtube social-icon" aria-hidden="true"></i>
+          <span>YouTube Channel</span>
+        </a>
+        
+        <a href="https://wisachx.wuaze.com/" target="_blank" rel="noopener noreferrer" class="social-link website" aria-label="Official Website">
+          <i class="fas fa-globe social-icon" aria-hidden="true"></i>
+          <span>เว็บไซต์อย่างเป็นทางการ</span>
+        </a>
+        
+        <a href="https://www.tiktok.com/@wisach_x" target="_blank" rel="noopener noreferrer" class="social-link tiktok" aria-label="TikTok Profile">
+          <i class="fab fa-tiktok social-icon" aria-hidden="true"></i>
+          <span>TikTok</span>
+        </a>
+        
+        <a href="https://discord.gg/u5QRq7PZwR" target="_blank" rel="noopener noreferrer" class="social-link discord" aria-label="Discord Community">
+          <i class="fab fa-discord social-icon" aria-hidden="true"></i>
+          <span>Discord Community</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const isMobile = window.innerWidth <= 768;
+      const particleCount = isMobile ? 20 : 40;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 5 + 15) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      createParticles();
+      
+      document.querySelectorAll('.social-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          this.style.transform = 'translateY(-2px) scale(0.98)';
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 150);
+        });
+      });
+    });
+
+    let ticking = false;
+    function updateParticles(e) {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const mouseX = e.clientX / window.innerWidth;
+          const mouseY = e.clientY / window.innerHeight;
+          
+          document.querySelectorAll('.particle').forEach((particle, index) => {
+            if (index % 3 === 0) { // Only update every 3rd particle for performance
+              const speed = 0.5;
+              const x = (mouseX - 0.5) * speed;
+              const y = (mouseY - 0.5) * speed;
+              particle.style.transform = `translate(${x}px, ${y}px)`;
+            }
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    if (window.innerWidth > 768) {
+      document.addEventListener('mousemove', updateParticles);
+    }
+  </script>
+</body>
+</html>
